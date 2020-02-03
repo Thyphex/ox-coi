@@ -161,14 +161,17 @@ Future checkOxCoiWelcomeAndProviderList(
   SerializableFinder coiDebugFinder,
   String mailbox,
 ) async {
-  var actualLoginButton = await driver.getText(find.text(L.getKey(L.loginSignIn).toUpperCase()));
-  var actualRegisterButton = await driver.getText(find.text(L.getKey(L.register).toUpperCase()));
+  var actualLoginButton = await driver.getText(find.byValueKey(keyLoginLoginSignInText));
+  var actualRegisterButton = await driver.getText(find.byValueKey(keyLoginRegisterText));
+
   expect(actualLoginButton, L.getKey(L.loginSignIn).toUpperCase());
   expect(actualRegisterButton, L.getKey(L.register).toUpperCase());
   await driver.tap(find.text(L.getKey(L.loginSignIn).toUpperCase()));
 
   //  Check if all providers are found in the list.
   var actualProvideOutlook = await driver.getText(find.text(outlook));
+  print("Hello world 4");
+
   var actualProviderYahoo = await driver.getText(find.text(yahoo));
   var actualLoginText = await driver.getText(find.text(L.getKey(L.loginSignIn)));
   var actualProviderDebug = await driver.getText(coiDebugFinder);
@@ -184,17 +187,14 @@ Future checkOxCoiWelcomeAndProviderList(
 
 Future selectAndTapProvider(FlutterDriver driver) async {
   final loginProviderSignInText = 'Sign in with Debug (mobile-qa)';
-  final coiDebugFinder = find.text(coiDebug);
   final emailFieldFinder = find.byValueKey(keyProviderSignInEmailTextField);
   final passwordFieldFinder = find.byValueKey(keyProviderSignInPasswordTextField);
-  var actualProviderDebug = await driver.getText(coiDebugFinder);
-  var actualLoginButton = await driver.getText(find.text(L.getKey(L.loginSignIn).toUpperCase()));
 
-  expect(actualProviderDebug, coiDebug);
-  await driver.tap(coiDebugFinder);
+  expect(await driver.getText(find.text(coiDebug)), coiDebug);
+  await driver.tap(find.text(coiDebug));
   var actualProviderDebugTitle = await driver.getText(find.text(loginProviderSignInText));
   expect(actualProviderDebugTitle, loginProviderSignInText);
-  expect(actualLoginButton, L.getKey(L.loginSignIn).toUpperCase());
+  expect(await driver.getText(find.text(L.getKey(L.loginSignIn).toUpperCase())), L.getKey(L.loginSignIn).toUpperCase());
   await driver.waitFor(emailFieldFinder);
   await driver.waitFor(passwordFieldFinder);
 }

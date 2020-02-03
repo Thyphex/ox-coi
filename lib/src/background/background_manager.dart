@@ -40,53 +40,75 @@
  * for more details.
  */
 
-// Imports the Flutter Driver API.
-import 'package:test/test.dart';
-import 'package:flutter_driver/flutter_driver.dart';
+import 'package:background_fetch/background_fetch.dart';
+import 'package:delta_chat_core/delta_chat_core.dart';
+import 'package:logging/logging.dart';
+import 'package:ox_coi/src/notifications/local_push_manager.dart';
+import 'package:ox_coi/src/utils/constants.dart';
 
-import 'setup/global_consts.dart';
-import 'setup/helper_methods.dart';
-import 'setup/main_test_setup.dart';
+void backgroundHeadlessTask() async {
+  var core = DeltaChatCore();
+  var init = await core.init(dbName);
+  if (init) {
+    await getMessages();
+    await core.stop();
+  }
+  BackgroundFetch.finish();
+}
 
-void main() {
-  FlutterDriver driver;
-  setUpAll(() async {
-    driver = await setupAndGetDriver();
-  });
+Future<void> getMessages() async {
+  var context = Context();
+  await context.interruptIdleForIncomingMessages();
+  var localPushManager = LocalPushManager();
+  await localPushManager.setup();
+  await localPushManager.triggerLocalPush();
+}
 
-  group('Test create chat list', () {
-    const searchString = 'Douglas0';
+class BackgroundManager {
+  final Logger _logger = Logger("background_manager");
 
-    test(': Add three chats.', () async {
-      await createNewChat(
-        driver,
-        realEmail,
-        meContact,
-      );
-      await createNewChat(
-        driver,
-        newTestEmail02,
-        newTestName02,
-      );
-      await createNewChat(
-        driver,
-        newTestEmail04,
-        newTestName01,
-      );
-    });
+  static BackgroundManager _instance;
 
-    test(': Type something and get it.', () async {
-      await chatTest(driver, newTestName01);
-      await callTest(driver);
-      await driver.tap(pageBack);
-    });
+  bool _running = false;
 
-    test(': Search chat.', () async {
-      await chatSearch(
-        driver,
-        newTestName01,
-        searchString,
-      );
-    }, timeout: Timeout(Duration(seconds: 60)));
-  });
+  factory BackgroundManager() => _instance ??= BackgroundManager._internal();
+
+  BackgroundManager._internal();
+
+  setupAndStart() {
+    BackgroundFetch.registerHeadlessTask(backgroundHeadlessTask);
+    BackgroundFetch.configure(
+        BackgroundFetchConfig(
+          minimumFetchInterval: 15,
+          stopOnTerminate: false,
+          enableHeadless: true,
+          startOnBoot: true,
+        ),
+        _callback);
+    _running = true;
+    _logger.info("Configured and started background fetch");
+  }
+
+  Future<void> _callback() async {
+    await getMessages();
+    BackgroundFetch.finish();
+  }
+
+  void start() async {
+    if (_running) {
+      return;
+    }
+    await BackgroundFetch.start();
+    _logger.info("Started background fetch");
+    _running = true;
+  }
+
+  void stop() {
+    if (!_running) {
+      return;
+    }
+    BackgroundFetch.stop();
+    _logger.info("Stopped background fetch");
+    _running = false;
+  }
 }

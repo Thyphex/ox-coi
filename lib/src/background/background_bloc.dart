@@ -40,53 +40,41 @@
  * for more details.
  */
 
-// Imports the Flutter Driver API.
-import 'package:test/test.dart';
-import 'package:flutter_driver/flutter_driver.dart';
+import 'dart:async';
+import 'dart:ui';
 
-import 'setup/global_consts.dart';
-import 'setup/helper_methods.dart';
-import 'setup/main_test_setup.dart';
+import 'package:bloc/bloc.dart';
+import 'package:flutter/services.dart';
 
-void main() {
-  FlutterDriver driver;
-  setUpAll(() async {
-    driver = await setupAndGetDriver();
-  });
+import 'background_event_state.dart';
 
-  group('Test create chat list', () {
-    const searchString = 'Douglas0';
+class BackgroundBloc extends Bloc<BackgroundEvent, BackgroundState> {
+  String _currentBackgroundState;
 
-    test(': Add three chats.', () async {
-      await createNewChat(
-        driver,
-        realEmail,
-        meContact,
-      );
-      await createNewChat(
-        driver,
-        newTestEmail02,
-        newTestName02,
-      );
-      await createNewChat(
-        driver,
-        newTestEmail04,
-        newTestName01,
-      );
+  String get currentBackgroundState => _currentBackgroundState;
+
+  @override
+  BackgroundState get initialState => BackgroundStateInitial();
+
+  @override
+  Stream<BackgroundState> mapEventToState(BackgroundEvent event) async* {
+    if (event is BackgroundListenerSetup) {
+      try {
+        setup();
+      } catch (error) {
+        yield BackgroundStateFailure();
+      }
+    } else if (event is BackgroundStateChange) {
+      _currentBackgroundState = event.state;
+      yield BackgroundStateSuccess(state: _currentBackgroundState);
+    }
+  }
+
+  void setup() {
+    SystemChannels.lifecycle.setMessageHandler((state) async {
+      add(BackgroundStateChange(state: state));
+      return state;
     });
-
-    test(': Type something and get it.', () async {
-      await chatTest(driver, newTestName01);
-      await callTest(driver);
-      await driver.tap(pageBack);
-    });
-
-    test(': Search chat.', () async {
-      await chatSearch(
-        driver,
-        newTestName01,
-        searchString,
-      );
-    }, timeout: Timeout(Duration(seconds: 60)));
-  });
+    add(BackgroundStateChange(state: AppLifecycleState.resumed.toString()));
+  }
 }

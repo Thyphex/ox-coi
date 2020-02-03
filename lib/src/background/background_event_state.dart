@@ -40,53 +40,27 @@
  * for more details.
  */
 
-// Imports the Flutter Driver API.
-import 'package:test/test.dart';
-import 'package:flutter_driver/flutter_driver.dart';
+import 'package:flutter/widgets.dart';
 
-import 'setup/global_consts.dart';
-import 'setup/helper_methods.dart';
-import 'setup/main_test_setup.dart';
+abstract class BackgroundEvent {}
 
-void main() {
-  FlutterDriver driver;
-  setUpAll(() async {
-    driver = await setupAndGetDriver();
-  });
+class BackgroundListenerSetup extends BackgroundEvent {}
 
-  group('Test create chat list', () {
-    const searchString = 'Douglas0';
+class BackgroundStateChange extends BackgroundEvent {
+  final String state;
 
-    test(': Add three chats.', () async {
-      await createNewChat(
-        driver,
-        realEmail,
-        meContact,
-      );
-      await createNewChat(
-        driver,
-        newTestEmail02,
-        newTestName02,
-      );
-      await createNewChat(
-        driver,
-        newTestEmail04,
-        newTestName01,
-      );
-    });
-
-    test(': Type something and get it.', () async {
-      await chatTest(driver, newTestName01);
-      await callTest(driver);
-      await driver.tap(pageBack);
-    });
-
-    test(': Search chat.', () async {
-      await chatSearch(
-        driver,
-        newTestName01,
-        searchString,
-      );
-    }, timeout: Timeout(Duration(seconds: 60)));
-  });
+  BackgroundStateChange({@required this.state});
 }
+
+abstract class BackgroundState {}
+
+class BackgroundStateInitial extends BackgroundState {}
+
+class BackgroundStateFailure extends BackgroundState {}
+
+class BackgroundStateSuccess extends BackgroundState {
+  final String state;
+
+  BackgroundStateSuccess({@required this.state});
+}
+
