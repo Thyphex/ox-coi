@@ -57,6 +57,10 @@ void main() {
     driver = await setupAndGetDriver();
   });
 
+  tearDownAll(() async {
+    await teardownDriver(driver);
+  });
+
   const testNameGroup = "TestGroup";
   const newNameTestGroup = "NewNameTestGroup";
   const keyMoreButton11 = "keyMoreButton_11";
@@ -116,14 +120,13 @@ void main() {
 
   group('Test group chat functionality.', () {
     test(': Change group name and come back to Chat.', () async {
-      driver.tap(find.text(testNameGroup));
+      await driver.tap(find.text(testNameGroup));
       await driver.tap(find.byValueKey(keyChatNameText));
       await driver.tap(find.byValueKey(keyChatProfileGroupEditIcon));
       await driver.tap(find.byValueKey(keyEditNameValidatableTextFormField));
       await driver.enterText(newNameTestGroup);
       await driver.tap(find.byValueKey(keyEditNameCheckIcon));
-      var actualNewGroupName = await driver.getText(find.text(newNameTestGroup));
-      expect(actualNewGroupName, newNameTestGroup);
+      expect(await driver.getText(find.text(newNameTestGroup)), newNameTestGroup);
       await driver.tap(pageBack);
       await driver.tap(pageBack);
     });

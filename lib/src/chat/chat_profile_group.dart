@@ -187,7 +187,7 @@ class _ChatProfileGroupState extends State<ChatProfileGroup> {
         imageActionCallback: state.isRemoved ? null : _editPhotoCallback,
         avatarPath: state.avatarPath,
         showWhiteImageIcon: true,
-        editActionCallback: state.isRemoved ? null : _goToEditName,
+        editActionCallback: state.isRemoved ? null : _goToEditName,key: Key(keyChatProfileGroupEditIcon),
         child: ProfileHeader(),
       );
   }

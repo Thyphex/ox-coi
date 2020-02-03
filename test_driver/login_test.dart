@@ -57,10 +57,15 @@ void main() {
     driver = await setupAndGetDriver(isLogin: true);
   });
 
+  tearDownAll(() async {
+    await teardownDriver(driver);
+  });
+
   //  Const for the Ox coi welcome and provider page.
   const outlook = 'Outlook';
   const yahoo = 'Yahoo';
   const mailbox = 'Mailbox.org';
+  const openXChange = "Open-Xchange";
 
   //  SerializableFinder for Coi Debug dialog Windows.
   final errorMessage = find.text(L.getKey(L.loginCheckMail));
@@ -148,9 +153,8 @@ void main() {
   group('Performing the login with real authentication informations', () {
     test(': Login test: Sign in with realEmail and realPassword.', () async {
       await logIn(driver, realEmail, realPassword);
-      var actualChatListTitle = await driver.getText(find.text(L.getPluralKey(L.chatP)));
-      expect(actualChatListTitle, L.getPluralKey(L.chatP));
-    });
+      expect(await driver.getText(find.text(openXChange)), openXChange);
+    }, timeout: Timeout(Duration(seconds: 60)));
   });
 }
 
@@ -170,7 +174,6 @@ Future checkOxCoiWelcomeAndProviderList(
 
   //  Check if all providers are found in the list.
   var actualProvideOutlook = await driver.getText(find.text(outlook));
-  print("Hello world 4");
 
   var actualProviderYahoo = await driver.getText(find.text(yahoo));
   var actualLoginText = await driver.getText(find.text(L.getKey(L.loginSignIn)));
@@ -192,8 +195,7 @@ Future selectAndTapProvider(FlutterDriver driver) async {
 
   expect(await driver.getText(find.text(coiDebug)), coiDebug);
   await driver.tap(find.text(coiDebug));
-  var actualProviderDebugTitle = await driver.getText(find.text(loginProviderSignInText));
-  expect(actualProviderDebugTitle, loginProviderSignInText);
+  expect(await driver.getText(find.text(loginProviderSignInText)), loginProviderSignInText);
   expect(await driver.getText(find.text(L.getKey(L.loginSignIn).toUpperCase())), L.getKey(L.loginSignIn).toUpperCase());
   await driver.waitFor(emailFieldFinder);
   await driver.waitFor(passwordFieldFinder);
