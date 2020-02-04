@@ -65,6 +65,10 @@ void main() {
     driver = await setupAndGetDriver();
   });
 
+  tearDownAll(() async {
+    await teardownDriver(driver);
+  });
+
   group('Security test.', () {
     final security = L.getKey(L.security);
     final expertImportKeys = L.getKey(L.settingImportKeys);

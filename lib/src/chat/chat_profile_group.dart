@@ -187,7 +187,7 @@ class _ChatProfileGroupState extends State<ChatProfileGroup> {
         imageActionCallback: state.isRemoved ? null : _editPhotoCallback,
         avatarPath: state.avatarPath,
         showWhiteImageIcon: true,
-        editActionCallback: state.isRemoved ? null : _goToEditName,key: Key(keyChatProfileGroupEditIcon),
+        editActionCallback: state.isRemoved ? null : _goToEditName,
         child: ProfileHeader(),
       );
   }
@@ -224,7 +224,7 @@ class _ChatProfileGroupState extends State<ChatProfileGroup> {
       MaterialPageRoute<EditName>(
         builder: (context) {
           return BlocProvider.value(
-            value: _chatBloc,
+            value: _chatBloc,key: Key(keyChatProfileGroupEditIcon),
             child: EditName(
               chatId: widget.chatId,
               actualName: _chatName,

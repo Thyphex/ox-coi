@@ -66,6 +66,10 @@ void main() {
     driver = await setupAndGetDriver();
   });
 
+  tearDownAll(() async {
+    await teardownDriver(driver);
+  });
+
   group('Test Add swipe to delete for chats test.', () {
     test(': Create a chat.', () async {
       await createNewChat(

@@ -159,9 +159,8 @@ Future blockOneContactFromContacts(FlutterDriver driver, String contactNameToBlo
 
 Future unFlaggedMessage(FlutterDriver driver, String flagUnFlag, String messageToUnFlagged) async {
   SerializableFinder messageToUnFlaggedFinder = find.text(messageToUnFlagged);
-  await driver.tap(find.byValueKey(keyChatListGetFlaggedActionIconButton));
-  var actualUnflaggedMessage = await driver.getText(messageToUnFlaggedFinder);
-  expect(actualUnflaggedMessage, messageToUnFlagged);
+  await driver.tap(find.byValueKey(keyUserProfileFlaggedActionIconButton));
+  expect(await driver.getText(messageToUnFlaggedFinder), messageToUnFlagged);
   await driver.scroll(messageToUnFlaggedFinder, 0, 0, scrollDuration);
   await driver.tap(find.text(flagUnFlag));
 }

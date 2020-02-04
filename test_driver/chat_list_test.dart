@@ -54,6 +54,10 @@ void main() {
     driver = await setupAndGetDriver();
   });
 
+  tearDownAll(() async {
+    await teardownDriver(driver);
+  });
+
   group('Test create chat list', () {
     const searchString = 'Douglas0';
 

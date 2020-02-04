@@ -66,6 +66,10 @@ void main() {
     driver = await setupAndGetDriver();
   });
 
+  tearDownAll(() async {
+    await teardownDriver(driver);
+  });
+
   group('Test messages fonctionslity', () {
     final flagUnFlag = L.getKey(L.messageActionFlagUnflag);
     final forward = L.getKey(L.messageActionForward);
@@ -97,32 +101,32 @@ void main() {
     test(': Flagged messages from  meChat.', () async {
       await flaggedMessage(driver, flagUnFlag, helloWorldFinder);
       await driver.tap(pageBack);
-      await navigateTo(driver, L.getPluralKey(L.chatP));
+      await navigateTo(driver, L.getKey(L.profile));
     });
 
     test(': UnFlagged messages.', () async {
       await unFlaggedMessage(driver, flagUnFlag, helloWorld);
       await driver.waitForAbsent(helloWorldFinder);
       await driver.tap(pageBack);
+      await navigateTo(driver, L.getPluralKey(L.chatP));
       await driver.tap(meContactFinder);
     });
 
     test(': Forward message.', () async {
       await forwardMessageTo(driver, newTestName01, forward);
-      var actualMessage = await driver.getText(helloWorldFinder);
-      expect(actualMessage, helloWorld);
+      expect(await driver.getText(helloWorldFinder), helloWorld);
       await driver.tap(pageBack);
       await driver.tap(meContactFinder);
-    });
+    },skip: "test somethink");
 
     test(': Copy message from meContact and it paste in meContact.', () async {
       await copyAndPasteMessage(driver, copy, paste);
-    });
+    },skip: "test somethink");
 
     test(': Delete message.', () async {
       await writeTextInChat(driver, textToDelete);
       await deleteMessage(textToDeleteFinder, driver);
       await driver.waitForAbsent(textToDeleteFinder);
-    });
+    },skip: "test somethink");
   });
 }

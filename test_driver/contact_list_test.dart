@@ -55,6 +55,10 @@ void main() {
     driver = await setupAndGetDriver();
   });
 
+  tearDownAll(() async {
+    await teardownDriver(driver);
+  });
+
   group('Test create profile integration tests.', () {
     test(': Get conatact.', () async {
       await driver.tap(contactsFinder);

@@ -172,7 +172,7 @@ class _ProfileState extends State<UserProfile> {
                       icon: IconSource.flag,
                       text: L10n.get(L.settingItemFlaggedTitle),
                       iconBackground: CustomTheme.of(context).flagIcon,
-                      onTap: () => _settingsItemTapped(context, SettingsItemName.flagged),
+                      onTap: () => _settingsItemTapped(context, SettingsItemName.flagged)
                     ),
                     SettingsItem(
                       icon: IconSource.qr,

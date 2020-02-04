@@ -56,17 +56,16 @@ void main() {
     driver = await setupAndGetDriver();
   });
 
+  tearDownAll(() async {
+    await teardownDriver(driver);
+  });
+
   group('Test profile.', () {
     final testUserNameUserProfile = 'EDN tester';
-    final profileUserStatus = 'Sent with OX COI Messenger - https://coi.me';
-    final userProfileStatusTextFinder = find.text(profileUserStatus);
 
     test(': Get and edit profile.', () async {
       await driver.tap(profileFinder);
-      var actualMail = await driver.getText(userProfileEmailTextFinder);
-      expect(actualMail, realEmail);
-      var actualStatus = await driver.getText(userProfileStatusTextFinder);
-      expect(actualStatus, profileUserStatus);
+      expect(await driver.getText(find.byValueKey(keyProfileHeaderText)), realEmail);
       await driver.tap(userProfileEditRaisedButtonFinder);
       await driver.tap(find.byValueKey(keyUserSettingsUserSettingsUsernameLabel));
       await driver.enterText(testUserNameUserProfile);
@@ -76,8 +75,6 @@ void main() {
     test(': Check profile after change.', () async {
       var actualNewUsername = await driver.getText(find.text(testUserNameUserProfile));
       expect(actualNewUsername, testUserNameUserProfile);
-      var actualNewStatus = await driver.getText(find.text(profileUserStatus));
-      expect(actualNewStatus, profileUserStatus);
       await navigateTo(driver, L.getPluralKey(L.chatP));
     });
   });

@@ -64,7 +64,7 @@ void main() {
   const testNameGroup = "TestGroup";
   const newNameTestGroup = "NewNameTestGroup";
   const keyMoreButton11 = "keyMoreButton_11";
-  const keyMoreButton10 = "keyMoreButton_10";
+  const keyMoreButton10 = "keyMoreButton_12";
   const popupItemInfo = "Info";
   const popupItemRemove = "Remove from group";
   const popupItemSendMessage = "Send message";
@@ -102,18 +102,15 @@ void main() {
       await driver.tap(find.text(newTestName01));
       await driver.tap(find.text(newTestName02));
       await driver.tap(find.byValueKey(keyChatCreateGroupParticipantsSummitIconButton));
-      var actualFirstGroupName = await driver.getText(find.text(newTestName01));
-      expect(actualFirstGroupName, newTestName01);
-      var actualSecondGroupName = await driver.getText(find.text(newTestName02));
-      expect(actualSecondGroupName, newTestName02);
+      expect(await driver.getText(find.text(newTestName01)), newTestName01);
+      expect(await driver.getText(find.text(newTestName02)), newTestName02);
     });
 
     test(': Edit group name', () async {
       await driver.tap(find.byValueKey(keyChatCreateGroupSettingsGroupNameField));
       await driver.enterText(testNameGroup);
       await driver.tap(find.byValueKey(keyChatCreateGroupSettingCheckIconButton));
-      var actualNewGroupName = await driver.getText(find.text(testNameGroup));
-      expect(actualNewGroupName, testNameGroup);
+      expect(await driver.getText(find.text(testNameGroup)), testNameGroup);
       await driver.tap(pageBack);
     });
   });
@@ -122,7 +119,7 @@ void main() {
     test(': Change group name and come back to Chat.', () async {
       await driver.tap(find.text(testNameGroup));
       await driver.tap(find.byValueKey(keyChatNameText));
-      await driver.tap(find.byValueKey(keyChatProfileGroupEditIcon));
+      await driver.tap(find.byValueKey(keyProfileHeaderAdaptiveIconButton));
       await driver.tap(find.byValueKey(keyEditNameValidatableTextFormField));
       await driver.enterText(newNameTestGroup);
       await driver.tap(find.byValueKey(keyEditNameCheckIcon));
@@ -149,8 +146,7 @@ void main() {
       await driver.tap(find.text(newMe));
       await driver.tap(find.byValueKey(keySearchReturnIconButton));
       await driver.tap(find.byValueKey(keyChatAddGroupParticipantsCheckIcon));
-      var actualGroupParticipants = await driver.getText(find.text(groupParticipants));
-      expect(actualGroupParticipants, groupParticipants);
+      expect(await driver.getText(find.text(groupParticipants)), groupParticipants);
     });
 
     test(': Check popupMenu: Test info menu.', () async {
@@ -162,10 +158,8 @@ void main() {
     test(': Check popupMenu: Test remove menu.', () async {
       await driver.tap(find.byValueKey(keyMoreButton11));
       await driver.tap(find.text(popupItemRemove));
-      var actualFirstRemainingContact = await driver.getText(find.text(newTestName01));
-      expect(actualFirstRemainingContact, newTestName01);
-      var actualMeContact = await driver.getText(find.text(newMe));
-      expect(actualMeContact, newMe);
+      await driver.waitForAbsent(find.text(newTestName01));
+      expect(await driver.getText(find.text(newMe)), newMe);
     });
 
     test(': Check popupMenu: Test send menu.', () async {

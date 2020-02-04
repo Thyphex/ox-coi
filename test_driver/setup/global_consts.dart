@@ -95,7 +95,7 @@ final createChatFinder = find.byValueKey(keyChatListChatFloatingActionButton);
 
 final personAddFinder = find.byValueKey(keyContactListPersonAddFloatingActionButton);
 
-final userProfileEditRaisedButtonFinder = find.byValueKey(keyUserProfileEditProfileRaisedButton);
+final userProfileEditRaisedButtonFinder = find.byValueKey(keyProfileHeaderAdaptiveIconButton);
 
 final userSettingsCheckIconButtonFinder = find.byValueKey(keyUserSettingsCheckIconButton);
 
@@ -109,7 +109,7 @@ final keyContactChangeCheckFinder = find.byValueKey(keyContactChangeCheckIconBut
 
 final keyDialogBuilderAlertDialogOkFlatButtonFinder = find.byValueKey(keyInformationDialogPositiveButton);
 
-final userProfileEmailTextFinder = find.byValueKey(keyUserProfileEmailText);
+
 
 final userProfileSettingsAdaptiveIconFinder = find.byValueKey(keyUserProfileSettingsAdaptiveIcon);
 

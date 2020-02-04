@@ -67,6 +67,10 @@ void main() {
     driver = await setupAndGetDriver();
   });
 
+  tearDownAll(() async {
+    await teardownDriver(driver);
+  });
+
   group('Test block / unblock functionality', () {
     final block = L.getKey(L.block);
     final unblock = L.getKey(L.unblock);

@@ -58,6 +58,7 @@ import 'package:ox_coi/src/ui/text_styles.dart';
 import 'package:ox_coi/src/utils/clipboard.dart';
 import 'package:ox_coi/src/widgets/avatar.dart';
 import 'package:ox_coi/src/widgets/placeholder_text.dart';
+import 'package:ox_coi/src/utils/keyMapping.dart';
 
 class ProfileData extends InheritedWidget {
   final Color imageBackgroundcolor;
@@ -247,7 +248,7 @@ class ProfileHeaderEditButton extends StatelessWidget {
           color: CustomTheme.of(context).onBackground.withOpacity(barely),
           icon: IconSource.edit,
           iconColor: CustomTheme.of(context).accent,
-        ),
+        ),key: Key(keyProfileHeaderAdaptiveIconButton),
         onPressed: () => ProfileData.of(context).editActionCallback(),
       ),
     );
@@ -278,7 +279,7 @@ class ProfileSecondText extends StatelessWidget {
       ProfileData.of(context).secondText,
       overflow: TextOverflow.ellipsis,
       maxLines: 1,
-      style: getProfileHeaderSecondTextStyle(context),
+      style: getProfileHeaderSecondTextStyle(context),key: Key(keyProfileHeaderText),
     );
     return Container(
         child: ProfileData.of(context).iconData != null

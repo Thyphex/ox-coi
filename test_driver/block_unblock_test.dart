@@ -55,6 +55,10 @@ void main() {
     driver = await setupAndGetDriver();
   });
 
+  tearDownAll(() async {
+    await teardownDriver(driver);
+  });
+
   group('Test block unblock functionality', () {
 
     test(': Get contacts', () async {

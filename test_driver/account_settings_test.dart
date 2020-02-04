@@ -65,6 +65,10 @@ void main() {
     driver = await setupAndGetDriver();
   });
 
+  tearDownAll(() async {
+    await teardownDriver(driver);
+  });
+
   group('Test account settings', () {
     const fakeIMAPCoiServer = 'mobile-coi.open-xchange.comm';
     const fakeSMTPCoiServer = 'mobile-coi.open-xchange.comm';

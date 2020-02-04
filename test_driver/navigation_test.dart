@@ -56,6 +56,10 @@ void main() {
     driver = await setupAndGetDriver();
   });
 
+  tearDownAll(() async {
+    await teardownDriver(driver);
+  });
+
   group('Test navigation tests.', () {
     test(': Test chat navigation.', () async {
       await driver.tap(profileFinder);
@@ -81,7 +85,7 @@ void main() {
 
 Future checkProfile(FlutterDriver driver) async {
   SerializableFinder settingsUserSettingsUsernameLabelFinder = find.byValueKey(keyUserSettingsUserSettingsUsernameLabel);
-  SerializableFinder finderUserProfileEditRaisedButton = find.byValueKey(keyUserProfileEditProfileRaisedButton);
+  SerializableFinder finderUserProfileEditRaisedButton = find.byValueKey(keyProfileHeaderAdaptiveIconButton);
   await driver.tap(profileFinder);
   var actualUsernamePlaceholder = await driver.getText(find.text(L.getKey(L.profileNoUsername)));
   expect(actualUsernamePlaceholder, L.getKey(L.profileNoUsername));
@@ -95,7 +99,7 @@ Future checkProfile(FlutterDriver driver) async {
 Future checkChat(FlutterDriver driver) async {
   final chatCreate = L.getKey(L.chatCreate);
   //  Check flaggedButton.
-  await driver.tap(find.byValueKey(keyChatListGetFlaggedActionIconButton));
+  await driver.tap(find.byValueKey(keyUserProfileFlaggedActionIconButton));
   await driver.tap(pageBack);
   await driver.tap(createChatFinder);
   var actualNewChatName = await driver.getText(find.text(chatCreate));
