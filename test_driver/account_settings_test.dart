@@ -58,6 +58,7 @@ import 'package:test/test.dart';
 
 import 'setup/global_consts.dart';
 import 'setup/main_test_setup.dart';
+import 'package:ox_coi/src/utils/keyMapping.dart';
 
 void main() {
   FlutterDriver driver;
@@ -74,14 +75,12 @@ void main() {
     const fakeSMTPCoiServer = 'mobile-coi.open-xchange.comm';
     const realServer = 'mobile-coi.open-xchange.com';
 
-    test(': Open edit profile.', () async {
+    test(': Open profile', () async {
       await driver.tap(profileFinder);
-      await driver.tap(userProfileSettingsAdaptiveIconFinder);
-      await driver.tap(find.text(L.getKey(L.settingAccount)));
-      await driver.tap(userAccountAdaptiveIconButtonIconCheckFinder);
     });
 
     test(': Case real password and fake IMAP server.', () async {
+      await driver.tap(find.byValueKey(keyUserProfileServerSettingIconSource));
       await driver.tap(settingsManuelFormValidatableTextFormFieldPasswordFieldFinder);
       await driver.enterText(realPassword);
       await driver.tap(settingsManuelFormValidatableTextFormFieldImapServerFieldFinder);

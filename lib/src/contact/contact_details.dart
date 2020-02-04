@@ -147,7 +147,7 @@ class _ContactDetailsState extends State<ContactDetails> with ChatCreateMixin {
                       onTap: () => _editContact(context, state.name, state.email, state.phoneNumbers),
                     ),
                     ProfileAction(
-                      key: Key(keyContactDetailBlockContactProfileActionIcon),
+                      key: Key(keyUserProfileBlockIconSource),
                       iconData: IconSource.block,
                       text: L10n.get(L.contactBlock),
                       color: CustomTheme.of(context).accent,

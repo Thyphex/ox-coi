@@ -49,7 +49,7 @@ const keyProfileHeaderText = "keyProfileHeaderText";
 const keyUserProfileShowQrRaisedButton = "keyUserProfileShowQrRaisedButton";
 
 const keyUserProfileSettingsAdaptiveIcon = "keyUserProfileSettingsAdaptiveIcon";
-const keyUserProfileFlaggedActionIconButton = "keyUserProfileFlaggedActionIconButton";
+const keyUserProfileFlagIconSource = "keyUserProfileFlagIconSource";
 
 const keyRootIconChatTitleText = "Chat";
 const keyRootIconContactsTitleText = "Contacts";
@@ -71,12 +71,15 @@ const keyContactChangeEmailValidatableTextFormField = "keyContact_changeEmailVal
 const keyContactChangeNameValidatableTextFormField = "key_ContactChangeNameValidatableTextFormField";
 
 const keyContactListImportContactIconButton = "key_ContactListImportContactIconButton";
-const keyContactListBlockIconButton = "keyContactListBlockIconButton";
+const keyUserProfileBlockIconButton = "keyContactListBlockIconButton";
+const keyUserProfileBlockIconSource = "keyUserProfilBlockIconSource";
 const keyContactListSearchIconButton = "keyContactListSearchIconButton";
+const keyUserProfileNotificationIconSource ="keyProfileNotificationIconSource";
+const keyUserProfileDarkModeIconSource="keyProfileDarkModeIconSource";
+const keyUserProfileServerSettingIconSource="keyUserProfileServerSettingIconSource";
 
 const keyContactDetailOpenChatProfileActionIcon = "keyContactDetailOpenChatProfileActionIcon";
 const keyContactDetailEditContactProfileActionIcon = "keyContactDetailEditContactProfileActionIcon";
-const keyContactDetailBlockContactProfileActionIcon = "keyContactDetailBlockContactProfileActionIcon";
 const keyContactDetailDeleteContactProfileActionIcon = "keyContactDetaildeleteContactProfileActionIcon";
 
 const keyContactBlockedListCloseIconButton = "key_ContactBlockedListCloseIconButton";
@@ -92,6 +95,7 @@ const keySearchClearIconButton = "key_SearchClearIconButton";
 const keyChatCreatePersonAddIcon = "key_ChatCreatePersonAddIcon";
 const keyChatCreateGroupAddIcon = "key_ChatcreateGroupAddIcon";
 const keyChatCreateSearchIcon = "key_ChatcreateSearchIcon";
+const keyChatCreateAdaptiveAppBar ="keyChatCreateAdaptiveAppBar";
 
 const keyChatCreateGroupParticipantsCloseIconButton = "key_ChatCreateGroupParticipantsIconButton";
 const keyChatCreateGroupParticipantsSummitIconButton = "keyChatCreateGroupParticipantsSummitIconButton";

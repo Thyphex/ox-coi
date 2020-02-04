@@ -80,8 +80,7 @@ Future addNewContact(
   await driver.tap(keyContactChangeEmailFinder);
   await driver.enterText(newTestContact);
   await driver.tap(keyContactChangeCheckFinder);
-  var actualNewContact = await driver.getText(find.text(newTestName));
-  expect(actualNewContact, newTestName);
+  expect(await driver.getText(find.text(newTestName)), newTestName);
 }
 
 Future deleteContact(
@@ -153,13 +152,13 @@ Future unblockOneContactFromBlockedContacts(
 Future blockOneContactFromContacts(FlutterDriver driver, String contactNameToBlock) async {
   const blockContact = 'Block contact';
   await driver.tap(find.text(contactNameToBlock));
-  await driver.tap(find.byValueKey(keyContactDetailBlockContactProfileActionIcon));
+  await driver.tap(find.byValueKey(keyUserProfileBlockIconSource));
   await driver.tap(find.text(blockContact));
 }
 
 Future unFlaggedMessage(FlutterDriver driver, String flagUnFlag, String messageToUnFlagged) async {
   SerializableFinder messageToUnFlaggedFinder = find.text(messageToUnFlagged);
-  await driver.tap(find.byValueKey(keyUserProfileFlaggedActionIconButton));
+  await driver.tap(find.byValueKey(keyUserProfileFlagIconSource));
   expect(await driver.getText(messageToUnFlaggedFinder), messageToUnFlagged);
   await driver.scroll(messageToUnFlaggedFinder, 0, 0, scrollDuration);
   await driver.tap(find.text(flagUnFlag));

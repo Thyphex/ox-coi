@@ -69,6 +69,7 @@ import 'package:ox_coi/src/widgets/group_header.dart';
 import 'package:ox_coi/src/widgets/profile_header.dart';
 import 'package:ox_coi/src/widgets/settings_item.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:ox_coi/src/utils/keyMapping.dart';
 
 class UserProfile extends RootChild {
   UserProfile({appBarActionsStream, Key key}) : super(appBarActionsStream: appBarActionsStream, key: key);
@@ -172,7 +173,8 @@ class _ProfileState extends State<UserProfile> {
                       icon: IconSource.flag,
                       text: L10n.get(L.settingItemFlaggedTitle),
                       iconBackground: CustomTheme.of(context).flagIcon,
-                      onTap: () => _settingsItemTapped(context, SettingsItemName.flagged)
+                      onTap: () => _settingsItemTapped(context, SettingsItemName.flagged),
+                      key: Key(keyUserProfileFlagIconSource),
                     ),
                     SettingsItem(
                       icon: IconSource.qr,
@@ -196,12 +198,14 @@ class _ProfileState extends State<UserProfile> {
                       onTap: () => _changeTheme(),
                       showSwitch: true,
                       onSwitchChanged: () => _changeTheme(),
+                      key: Key(keyUserProfileDarkModeIconSource),
                     ),
                     SettingsItem(
                       icon: IconSource.notifications,
                       text: L10n.get(L.settingItemNotificationsTitle),
                       iconBackground: CustomTheme.of(context).notificationIcon,
                       onTap: () => _settingsItemTapped(context, SettingsItemName.notification),
+                      key: Key(keyUserProfileNotificationIconSource),
                     ),
                     SettingsItem(
                       icon: IconSource.chat,
@@ -223,6 +227,7 @@ class _ProfileState extends State<UserProfile> {
                       text: L10n.get(L.settingItemServerSettingsTitle),
                       iconBackground: CustomTheme.of(context).serverSettingsIcon,
                       onTap: () => _settingsItemTapped(context, SettingsItemName.serverSetting),
+                      key:Key(keyUserProfileServerSettingIconSource),
                     ),
                     GroupHeader(
                       text: L10n.get(L.settingGroupHeaderSecurityTitle),
@@ -238,6 +243,7 @@ class _ProfileState extends State<UserProfile> {
                       text: L10n.get(L.settingItemBlockedTitle),
                       iconBackground: CustomTheme.of(context).blockIcon,
                       onTap: () => _settingsItemTapped(context, SettingsItemName.blocked),
+                      key: Key(keyUserProfileBlockIconSource),
                     ),
                     SettingsItem(
                       icon: IconSource.lock,

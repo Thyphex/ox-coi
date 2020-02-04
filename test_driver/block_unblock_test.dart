@@ -60,7 +60,6 @@ void main() {
   });
 
   group('Test block unblock functionality', () {
-
     test(': Get contacts', () async {
       await driver.tap(contactsFinder);
       await driver.tap(cancelFinder);
@@ -81,13 +80,15 @@ void main() {
     test(': Block one contact and check the blocking.', () async {
       await blockOneContactFromContacts(driver, newTestName01);
       await driver.waitForAbsent(find.text(newTestName01));
-      await driver.tap(find.byValueKey(keyContactListBlockIconButton));
-      var actualBlockedContact = await driver.getText(find.text(newTestName01));
-      expect(actualBlockedContact, newTestName01);
+      navigateTo(driver, L.getKey(L.profile));
+      await driver.scroll(find.byValueKey(keyUserProfileDarkModeIconSource), 0.0, -600.0, Duration(milliseconds: 500));
+      await driver.tap(find.byValueKey(keyUserProfileBlockIconSource));
+      expect(await driver.getText(find.text(newTestName01)), newTestName01);
     });
 
     test(': Unblock one contact and check the unblocking.', () async {
       await unblockOneContactFromBlockedContacts(driver, newTestName01);
+      await navigateTo(driver, L.getPluralKey(L.contactP));
       await driver.waitFor(find.text(newTestName01));
     });
   });

@@ -117,16 +117,16 @@ void main() {
       expect(await driver.getText(helloWorldFinder), helloWorld);
       await driver.tap(pageBack);
       await driver.tap(meContactFinder);
-    },skip: "test somethink");
+    });
 
     test(': Copy message from meContact and it paste in meContact.', () async {
       await copyAndPasteMessage(driver, copy, paste);
-    },skip: "test somethink");
+    });
 
     test(': Delete message.', () async {
       await writeTextInChat(driver, textToDelete);
       await deleteMessage(textToDeleteFinder, driver);
       await driver.waitForAbsent(textToDeleteFinder);
-    },skip: "test somethink");
+    });
   });
 }

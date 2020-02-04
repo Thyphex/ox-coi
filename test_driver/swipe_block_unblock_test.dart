@@ -100,7 +100,7 @@ void main() {
     });
 
     test(': Test unblock functionality.\n', () async {
-      await driver.tap(find.byValueKey(keyContactListBlockIconButton));
+      await driver.tap(find.byValueKey(keyUserProfileBlockIconButton));
       var actualBlockedContact = await driver.getText(find.text(newTestName01));
       expect(actualBlockedContact, newTestName01);
       await driver.scroll(find.text(newTestName01), 75, 0, Duration(milliseconds: 100));
@@ -112,7 +112,7 @@ void main() {
     test(': Test check if block and unblock are really been done\n', () async {
       var actualUnblockedContact = await driver.getText(find.text(newTestName01));
       expect(actualUnblockedContact, newTestName01);
-      await driver.tap(find.byValueKey(keyContactListBlockIconButton));
+      await driver.tap(find.byValueKey(keyUserProfileBlockIconButton));
       await driver.waitForAbsent(find.text(newTestName01));
     });
   });
